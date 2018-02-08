@@ -1,1 +1,2 @@
 # ottergram
+This repository consists of an academic project assigned for a front-end web engineering course I am currently enrolled in. Ottergram is a tutorial from the Front-End Web Development Big Nerd Ranch Guide 1st Edition. This project is the result of following that tutorial with the exception of a few added images to fufill the assignment's requirements. It is a great book and I highly recommend going through it if you are interested in learning more about web development!
