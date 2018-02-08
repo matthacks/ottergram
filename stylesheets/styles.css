@@ -1,23 +1,17 @@
 @font-face {
-    font-family: 'airstreamregular';
-    src: url('fonts/Airstream-webfont.eot');
-    src: url('fonts/Airstream-webfont.eot?#iefix') format('embedded-opentype'),
-         url('fonts/Airstream-webfont.woff') format('woff'),
-         url('fonts/Airstream-webfont.ttf') format('truetype'),
-         url('fonts/Airstream-webfont.svg#airstreamregular') format('svg');
-    font-weight: normal;
-    font-style: normal;
+  font-family: 'airstreamregular';
+  src: url('fonts/Airstream-webfont.eot');
+  src: url('fonts/Airstream-webfont.eot?#iefix') format('embedded-opentype'), url('fonts/Airstream-webfont.woff') format('woff'), url('fonts/Airstream-webfont.ttf') format('truetype'), url('fonts/Airstream-webfont.svg#airstreamregular') format('svg');
+  font-weight: normal;
+  font-style: normal;
 }
 
 @font-face {
-    font-family: 'lakeshore';
-    src: url('fonts/LAKESHOR-webfont.eot');
-    src: url('fonts/LAKESHOR-webfont.eot?#iefix') format('embedded-opentype'),
-         url('fonts/LAKESHOR-webfont.woff') format('woff'),
-         url('fonts/LAKESHOR-webfont.ttf') format('truetype'),
-         url('fonts/LAKESHOR-webfont.svg#lakeshore') format('svg');
-    font-weight: normal;
-    font-style: normal;
+  font-family: 'lakeshore';
+  src: url('fonts/LAKESHOR-webfont.eot');
+  src: url('fonts/LAKESHOR-webfont.eot?#iefix') format('embedded-opentype'), url('fonts/LAKESHOR-webfont.woff') format('woff'), url('fonts/LAKESHOR-webfont.ttf') format('truetype'), url('fonts/LAKESHOR-webfont.svg#lakeshore') format('svg');
+  font-weight: normal;
+  font-style: normal;
 }
 
 html, body {
@@ -62,9 +56,8 @@ a {
   border: 1px solid rgb(100%, 100%, 100%);
   border: 1px solid rgba(100%, 100%, 100%, 0.8);
   display: inline-block;
-  min-width: 120px;
   max-width: 120px;
-
+  min-width: 120px;
   transition: transform 133ms ease-in-out;
 }
 
@@ -73,11 +66,11 @@ a {
 }
 
 .thumbnail-list {
+  display: flex;
   flex: 0 1 auto;
+  justify-content: space-between;
   list-style: none;
   order: 2;
-  display: flex;
-  justify-content: space-between;
   overflow-x: auto;
   padding: 20px 0;
   white-space: nowrap;
@@ -102,12 +95,15 @@ a {
 .detail-image-frame {
   position: relative;
   text-align: center;
-
-  transition: transform 333ms cubic-bezier(.74,.09,.93,.87);
+  transition: transform 333ms cubic-bezier(.74, .09, .93, .87);
 }
 
 .detail-image {
   width: 90%;
+}
+
+.game-screenshot {
+  object-fit: contain;
 }
 
 .is-tiny {
@@ -145,21 +141,16 @@ a {
     flex-direction: row;
     overflow: hidden;
   }
-
   .thumbnail-list {
     flex-direction: column;
-    order: 0;
     margin-left: 20px;
-
+    order: 0;
     padding: 0 35px;
   }
-
   .thumbnail-item {
     max-width: 260px;
   }
-
-  .thumbnail-item + .thumbnail-item {
+  .thumbnail-item+.thumbnail-item {
     margin-top: 20px;
   }
-
 }

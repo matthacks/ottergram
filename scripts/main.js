@@ -33,9 +33,9 @@ function setDetailsFromThumb(thumbnail) {
   setDetails(imageFromThumb(thumbnail), titleFromThumb(thumbnail));
 }
 
-function addThumbClickHandler(thumb){
+function addThumbClickHandler(thumb) {
   'use strict';
-  thumb.addEventListener('click', function (event) {
+  thumb.addEventListener('click', function(event) {
     event.preventDefault();
     setDetailsFromThumb(thumb);
     showDetails();
@@ -68,11 +68,11 @@ function showDetails() {
   }, 50);
 }
 
-function addKeyPressHandler(){
+function addKeyPressHandler() {
   'use strict';
-  document.body.addEventListener('keyup', function (event){
+  document.body.addEventListener('keyup', function(event) {
     event.preventDefault();
-    if(event.keyCode === ESC_KEY) {
+    if (event.keyCode === ESC_KEY) {
       hideDetails();
     }
   });
