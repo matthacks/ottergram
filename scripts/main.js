@@ -5,6 +5,7 @@ var THUMBNAIL_LINK_SELECTOR = '[data-image-role="trigger"]';
 var HIDDEN_DETAIL_CLASS = 'hidden-detail';
 var TINY_EFFECT_CLASS = 'is-tiny';
 var ESC_KEY = 27;
+var indexOfCurrentlyDisplayedImage = 0;
 
 function setDetails(imageURL, titleText) {
   //this line tells the browser that the function conforms to the most recent
@@ -33,10 +34,11 @@ function setDetailsFromThumb(thumbnail) {
   setDetails(imageFromThumb(thumbnail), titleFromThumb(thumbnail));
 }
 
-function addThumbClickHandler(thumb) {
+function addThumbClickHandler(thumb, index) {
   'use strict';
   thumb.addEventListener('click', function(event) {
     event.preventDefault();
+    setIndexOfCurrentlyDisplayedImage(index);
     setDetailsFromThumb(thumb);
     showDetails();
   });
@@ -78,11 +80,43 @@ function addKeyPressHandler() {
   });
 }
 
+function setIndexOfCurrentlyDisplayedImage(newIndex) {
+  indexOfCurrentlyDisplayedImage = newIndex;
+}
+
+function addCycleImagesLeftHandler() {
+  'use strict';
+  document.getElementById("cycleImagesLeftButton").addEventListener('click', function(event) {
+    let thumbnailsAr = getThumbnailsArray();
+    var previousImageIndex;
+    if (indexOfCurrentlyDisplayedImage === 0) {
+      previousImageIndex = thumbnailsAr.length - 1;
+    } else {
+      previousImageIndex = (indexOfCurrentlyDisplayedImage - 1) % thumbnailsAr.length;
+    }
+    setIndexOfCurrentlyDisplayedImage(previousImageIndex);
+    setDetailsFromThumb(thumbnailsAr[previousImageIndex]);
+    showDetails();
+  });
+}
+
+function addCycleImagesRightHandler() {
+  'use strict';
+  document.getElementById("cycleImagesRightButton").addEventListener('click', function(event) {
+    let thumbnailsAr = getThumbnailsArray();
+    let nextImageIndex = (indexOfCurrentlyDisplayedImage + 1) % thumbnailsAr.length;
+    setIndexOfCurrentlyDisplayedImage(nextImageIndex);
+    setDetailsFromThumb(thumbnailsAr[nextImageIndex]);
+    showDetails();
+  });
+}
+
 function initializeEvents() {
   'use strict';
   var thumbnails = getThumbnailsArray();
   thumbnails.forEach(addThumbClickHandler);
-
+  addCycleImagesLeftHandler();
+  addCycleImagesRightHandler();
   addKeyPressHandler();
 }
 
