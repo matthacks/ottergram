@@ -1,42 +1,49 @@
-var DETAIL_IMAGE_SELECTOR = '[data-image-role="target"]';
-var DETAIL_TITLE_SELECTOR = '[data-image-role="title"]';
-var DETAIL_FRAME_SELECTOR = '[data-image-role="frame"]';
-var THUMBNAIL_LINK_SELECTOR = '[data-image-role="trigger"]';
-var HIDDEN_DETAIL_CLASS = 'hidden-detail';
-var TINY_EFFECT_CLASS = 'is-tiny';
-var ESC_KEY = 27;
-var indexOfCurrentlyDisplayedImage = 0;
+const DETAIL_IMAGE_SELECTOR = '[data-image-role="target"]';
+const DETAIL_TITLE_SELECTOR = '[data-image-role="title"]';
+const DETAIL_FRAME_SELECTOR = '[data-image-role="frame"]';
+const THUMBNAIL_LINK_SELECTOR = '[data-image-role="trigger"]';
+const HIDDEN_DETAIL_CLASS = 'hidden-detail';
+const TINY_EFFECT_CLASS = 'is-tiny';
+const ESC_KEY = 27;
+let indexOfCurrentlyDisplayedImage = 0;
 
 function setDetails(imageURL, titleText) {
-  //this line tells the browser that the function conforms to the most recent
-  //standard version of JavaScript
-  'use strict';
+  // this line tells the browser that the function conforms to the most recent
+  // standard version of JavaScript
+  const detailImage = document.querySelector(DETAIL_IMAGE_SELECTOR);
+  detailImage.setAttribute('src', imageURL);
 
-  var detailImage = document.querySelector(DETAIL_IMAGE_SELECTOR);
-  detailImage.setAttribute("src", imageURL);
-
-  var detailTitle = document.querySelector(DETAIL_TITLE_SELECTOR);
+  const detailTitle = document.querySelector(DETAIL_TITLE_SELECTOR);
   detailTitle.innerHTML = titleText;
 }
 
 function imageFromThumb(thumbnail) {
-  'use strict'
-  return thumbnail.getAttribute('data-image-url')
+  return thumbnail.getAttribute('data-image-url');
 }
 
 function titleFromThumb(thumbnail) {
-  'use strict'
-  return thumbnail.getAttribute('data-image-title')
+  return thumbnail.getAttribute('data-image-title');
 }
 
 function setDetailsFromThumb(thumbnail) {
-  'use strict';
   setDetails(imageFromThumb(thumbnail), titleFromThumb(thumbnail));
 }
 
+function setIndexOfCurrentlyDisplayedImage(newIndex) {
+  indexOfCurrentlyDisplayedImage = newIndex;
+}
+
+function showDetails() {
+  const frame = document.querySelector(DETAIL_FRAME_SELECTOR);
+  document.body.classList.remove(HIDDEN_DETAIL_CLASS);
+  frame.classList.add(TINY_EFFECT_CLASS);
+  setTimeout(() => {
+    frame.classList.remove(TINY_EFFECT_CLASS);
+  }, 50);
+}
+
 function addThumbClickHandler(thumb, index) {
-  'use strict';
-  thumb.addEventListener('click', function(event) {
+  thumb.addEventListener('click', (event) => {
     event.preventDefault();
     setIndexOfCurrentlyDisplayedImage(index);
     setDetailsFromThumb(thumb);
@@ -45,34 +52,21 @@ function addThumbClickHandler(thumb, index) {
 }
 
 function getThumbnailsArray() {
-  'use strict';
-  var thumbnails = document.querySelectorAll(THUMBNAIL_LINK_SELECTOR);
-  //since qSA returns a node list which contains less functionality than an array
-  //(there is no for each method)....
-  //we will now convert to an array using a backward-compatable way
-  //arrays also guarenteed that items in the array will not change even if the DOM is modified
-  var thumbnailArray = [].slice.call(thumbnails);
+  const thumbnails = document.querySelectorAll(THUMBNAIL_LINK_SELECTOR);
+  // since qSA returns a node list which contains less functionality than an array
+  // (there is no for each method)....
+  // we will now convert to an array using a backward-compatable way
+  // arrays also guarenteed that items in the array will not change even if the DOM is modified
+  const thumbnailArray = [].slice.call(thumbnails);
   return thumbnailArray;
 }
 
 function hideDetails() {
-  'use strict';
   document.body.classList.add(HIDDEN_DETAIL_CLASS);
 }
 
-function showDetails() {
-  'use strict';
-  var frame = document.querySelector(DETAIL_FRAME_SELECTOR);
-  document.body.classList.remove(HIDDEN_DETAIL_CLASS);
-  frame.classList.add(TINY_EFFECT_CLASS);
-  setTimeout(function() {
-    frame.classList.remove(TINY_EFFECT_CLASS);
-  }, 50);
-}
-
 function addKeyPressHandler() {
-  'use strict';
-  document.body.addEventListener('keyup', function(event) {
+  document.body.addEventListener('keyup', (event) => {
     event.preventDefault();
     if (event.keyCode === ESC_KEY) {
       hideDetails();
@@ -80,15 +74,10 @@ function addKeyPressHandler() {
   });
 }
 
-function setIndexOfCurrentlyDisplayedImage(newIndex) {
-  indexOfCurrentlyDisplayedImage = newIndex;
-}
-
 function addCycleImagesLeftHandler() {
-  'use strict';
-  document.getElementById("cycleImagesLeftButton").addEventListener('click', function(event) {
-    let thumbnailsAr = getThumbnailsArray();
-    var previousImageIndex;
+  document.getElementById('cycleImagesLeftButton').addEventListener('click', () => {
+    const thumbnailsAr = getThumbnailsArray();
+    let previousImageIndex;
     if (indexOfCurrentlyDisplayedImage === 0) {
       previousImageIndex = thumbnailsAr.length - 1;
     } else {
@@ -101,10 +90,9 @@ function addCycleImagesLeftHandler() {
 }
 
 function addCycleImagesRightHandler() {
-  'use strict';
-  document.getElementById("cycleImagesRightButton").addEventListener('click', function(event) {
-    let thumbnailsAr = getThumbnailsArray();
-    let nextImageIndex = (indexOfCurrentlyDisplayedImage + 1) % thumbnailsAr.length;
+  document.getElementById('cycleImagesRightButton').addEventListener('click', () => {
+    const thumbnailsAr = getThumbnailsArray();
+    const nextImageIndex = (indexOfCurrentlyDisplayedImage + 1) % thumbnailsAr.length;
     setIndexOfCurrentlyDisplayedImage(nextImageIndex);
     setDetailsFromThumb(thumbnailsAr[nextImageIndex]);
     showDetails();
@@ -112,8 +100,7 @@ function addCycleImagesRightHandler() {
 }
 
 function initializeEvents() {
-  'use strict';
-  var thumbnails = getThumbnailsArray();
+  const thumbnails = getThumbnailsArray();
   thumbnails.forEach(addThumbClickHandler);
   addCycleImagesLeftHandler();
   addCycleImagesRightHandler();
